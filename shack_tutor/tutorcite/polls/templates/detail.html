@@ -1,0 +1,86 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="TemplateMo">
+
+        <title>First Portfolio Bootstrap 5 Theme</title>
+
+        <!-- CSS FILES --> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <link href="{% static 'polls/homepage/homepage/css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'polls/homepage/homepage/css/bootstrap-icons.css' %}" rel="stylesheet">
+
+        <link href="{% static 'polls/homepage/homepage/css/magnific-popup.css' %}" rel="stylesheet">
+
+        <link href="{% static 'polls/homepage/homepage/css/templatemo-first-portfolio-style.css' %}" rel="stylesheet">
+        
+        <!-- Title -->
+        <title>{{ tutor.name }} - Shack Tutors</title>
+        <link rel="icon" href="{% static 'polls/homepage/homepage/images/logos/shackicon.ico' %}">
+
+    </head>
+
+    <body>
+        <main>
+            <section class="hero" id="hero">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 text-center">
+                            <h1 class="hero-heading mb-0">{{ tutor.name }}</h1>
+                            <p class="text-white mb-lg-5 mb-4">{{ tutor.bio }}</p>
+                            {% if tutor.image %}
+                                <img src="{{ tutor.image.url }}" alt="{{ tutor.name }}" class="img-fluid rounded-circle mb-4" style="max-width: 200px;">
+                            {% endif %}
+
+                            <h2 class="text-white mb-4">Subjects:</h2>
+                            <ul class="list-unstyled">
+                                {% for subject in tutor.subjects.all %}
+                                    <li class="text-white">{{ subject.name }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% if tutor.email %}
+                                <p class="text-white">Email: <a href="mailto:{{ tutor.email }}" class="text-white">{{ tutor.email }}</a></p>
+                            {% endif %}
+                        </div>
+                    </div> 
+                </div>
+            </section>
+        </main>
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12">
+                        <div class="copyright-text-wrap">
+                            <p class="mb-0">
+                                <span class="copyright-text">Copyright © 2036 <a href="#">First Portfolio</a> Company. All rights reserved.</span>
+                                Design: 
+                                <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+         <!-- JAVASCRIPT FILES -->
+        <script src="{% static 'polls/homepage/homepage/js/jquery.min.js' %}"></script>
+        <script src="{% static 'polls/homepage/homepage/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'polls/homepage/homepage/js/jquery.sticky.js' %}"></script>
+        <script src="{% static 'polls/homepage/homepage/js/click-scroll.js' %}"></script>
+        <script src="{% static 'polls/homepage/homepage/js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'polls/homepage/homepage/js/magnific-popup-options.js' %}"></script>
+        <script src="{% static 'polls/homepage/homepage/js/custom.js' %}"></script>
+    </body>
+</html>
