@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
-from .models import Question, Choice, Tutor, Subject
+from .models import Question, Choice, Tutor, Subject, Review
 
 def home(request):
     best_tutor = None
@@ -28,4 +29,15 @@ def tutor_detail(request, tutor_id):
     reviews = tutor.reviews.all()
     return render(request, 'detail.html', {'tutor': tutor, 'reviews': reviews})
 
+def leave_review(request, tutor_id):
+    if request.method == 'POST':
+        tutor = Tutor.objects.get(id=tutor_id)
+        name = request.POST.get('name')
+        comment = request.POST.get('comment')
 
+
+        review = Review(name=name, tutor=tutor, comment=comment)
+        review.save()
+        messages.success(request, 'Thank you for submitting your review!')
+
+    return redirect("tutor_detail", tutor_id=tutor_id)

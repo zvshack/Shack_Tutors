@@ -33,30 +33,167 @@
 
     <body>
         <main>
-            <section class="hero" id="hero">
+            {% if messages %}
+                <div id="message-container">
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" id="review-success-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <section class="hero detail-hero" id="hero">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 col-12 text-center">
                             <h1 class="hero-heading mb-0">{{ tutor.name }}</h1>
-                            <p class="text-white mb-lg-5 mb-4">{{ tutor.bio }}</p>
-                            {% if tutor.image %}
-                                <img src="{{ tutor.image.url }}" alt="{{ tutor.name }}" class="img-fluid rounded-circle mb-4" style="max-width: 200px;">
-                            {% endif %}
-
-                            <h2 class="text-white mb-4">Subjects:</h2>
-                            <ul class="list-unstyled">
-                                {% for subject in tutor.subjects.all %}
-                                    <li class="text-white">{{ subject.name }}</li>
-                                {% endfor %}
-                            </ul>
-                            {% if tutor.email %}
-                                <p class="text-white">Email: <a href="mailto:{{ tutor.email }}" class="text-white">{{ tutor.email }}</a></p>
-                            {% endif %}
+                            <!-- <img src="{% static 'polls/homepage/homepage/images/' %}{{ tutor.id }}profpic.jpeg" class="img-fluid rounded-circle mb-4" style="max-width: 200px;"> -->
+                            <img src="{% static 'polls/homepage/homepage/images/tutor_images/' %}{{ tutor.id }}profpic.jpeg" class="avatar-image ms-auto img-fluid detail-avatar-image" alt="">
+                            <p class="text-white mb-lg-5 mb-4 detail-bio">{{ tutor.bio }}</p>
+                            
                         </div>
                     </div> 
                 </div>
             </section>
         </main>
+        <section class="about section-padding" id="section_2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-12 mt-5 mt-lg-0">
+                            <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                                <h2 class="text-white ms-0 mb-4">Subjects:</h2>
+                            </div>
+                            <div class="about-thumb">
+                                
+                                <div class="detail-subject-grid">
+                                   
+                                    {% for subject in tutor.subjects.all %}
+                                        <li class="text-black">{{ subject.name }}</li>
+                                    {% endfor %}
+                                    
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+        </section>
+
+        <section class="about section-padding" id="section_2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-12 mt-5 mt-lg-0">
+                            <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                                <h2 class="text-white ms-0 mb-4">Reviews</h2>
+                            </div>
+                            <div class="row">
+                                {% if tutor.reviews.count == 0 %}
+                                    <p class="text-black">No reviews yet.</p>
+                                {% endif %}
+                                {% for review in tutor.reviews.filter(approved=True) %}
+                                    <div class="col-lg-4">
+                                        <div class="review-card">
+                                            <p class="text-black">{{ review.created_at }}</p>
+                                            <br>
+                                            <p class="text-black">"{{ review.comment }}"</p>   
+                                            <br>
+                                            <h3 class="text-black">- {{ review.name }}</h3>                
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#reviewModal">Leave a Review</button>
+                                <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="reviewModalLabel">Leave a Review</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" action="{% url 'leave_review' tutor.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label">Name</label>
+                                                        <input type="text" class="form-control" id="name" name="name" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="comment" class="form-label">Review</label>
+                                                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="contact section-padding" id="section_3">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-8 col-12">
+                                
+                        <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                            <img src="{% static 'polls/homepage/homepage/images/aerial-view-man-using-computer-laptop-wooden-table.jpg' %}" class="avatar-image img-fluid" alt="">
+
+                            <h2 class="text-white ms-4 mb-0">Contact Us</h2>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-lg-6 col-12 mt-5 mt-lg-0">
+                        <form action="#" method="get" class="custom-form contact-form" role="form">
+                            <div class="row">                                       
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <select name="tutor" class="form-control" required>
+                                            <option value="">{{ tutor.name }}</option>
+                                        </select>
+                                        <label for="floatingInput">Tutor</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Name" required="">
+                                        
+                                        <label for="floatingInput">Name</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12"> 
+                                    <div class="form-floating">
+                                        <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required="">
+                                                
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" id="message" name="message" placeholder="Tell me about the project"></textarea>
+                                        
+                                        <label for="floatingTextarea">Details: Subject, Grade Level, or Any Other Information</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-12 ms-auto">
+                                    <button type="submit" class="form-control">Send</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
         <footer class="site-footer">
             <div class="container">
                 <div class="row">
@@ -75,6 +212,7 @@
             </div>
         </footer>
          <!-- JAVASCRIPT FILES -->
+        <script setTimeout="setTimeout(function() { const alert = document.getElementById('review-success-message'); if (alert) alert.classList.add('fade-out'); setTimeout(function(){alert.remove(); }, 1000); }, 8000);"></script>
         <script src="{% static 'polls/homepage/homepage/js/jquery.min.js' %}"></script>
         <script src="{% static 'polls/homepage/homepage/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'polls/homepage/homepage/js/jquery.sticky.js' %}"></script>

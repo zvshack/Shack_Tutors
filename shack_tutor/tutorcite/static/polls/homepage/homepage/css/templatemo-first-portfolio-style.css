@@ -1021,7 +1021,43 @@ strong {
   color: var(--white-color);
 }
 
+/*---------------------------------------
+  Detail Page               
+-----------------------------------------*/
 
+.detail-hero{
+  background: var(--secondary-color);
+    height: auto;
+    min-height: 60vh;
+    position: relative;
+    overflow: visible;
+    padding-top: 50px;
+    padding-bottom: 330px;
+}
+
+.detail-bio{
+  position: relative;
+    z-index: 22;
+    top: 70px;
+}
+
+.detail-avatar-image{
+  border-radius: var(--border-radius-large);
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.detail-subject-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
 /*---------------------------------------
   RESPONSIVE STYLES               
 -----------------------------------------*/
