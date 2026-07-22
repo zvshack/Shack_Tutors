@@ -36,8 +36,10 @@
             {% if messages %}
                 <div id="message-container">
                     {% for message in messages %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" id="review-success-message">
+                        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible text-center fade show" role="alert" id="message-container">
                             {{ message }}
+
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endfor %}
                 </div>
@@ -89,7 +91,7 @@
                                 {% if tutor.reviews.count == 0 %}
                                     <p class="text-black">No reviews yet.</p>
                                 {% endif %}
-                                {% for review in tutor.reviews.filter(approved=True) %}
+                                {% for review in reviews %}
                                     <div class="col-lg-4">
                                         <div class="review-card">
                                             <p class="text-black">{{ review.created_at }}</p>
@@ -111,6 +113,10 @@
                                             <div class="modal-body">
                                                 <form method="post" action="{% url 'leave_review' tutor.id %}">
                                                     {% csrf_token %}
+                                                    <div class="mb-3">
+                                                        <label for="review_key" class="form-label">Review Key</label>
+                                                        <input type="text" class="form-control" id="review_key" name="review_key" required>
+                                                    </div>
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Name</label>
                                                         <input type="text" class="form-control" id="name" name="name" required>
@@ -211,8 +217,21 @@
                 </div>
             </div>
         </footer>
+        <!-- JAVASCRIPT TIMEOUT FUNCTION -->
+        <script>
+        setTimeout(function() {
+            const alert = document.getElementById('review-success-message');
+
+            if (alert) {
+                alert.classList.add('fade-out');
+
+                setTimeout(function() {
+                    alert.remove();
+                }, 1000);
+            }
+        }, 8000);
+        </script>
          <!-- JAVASCRIPT FILES -->
-        <script setTimeout="setTimeout(function() { const alert = document.getElementById('review-success-message'); if (alert) alert.classList.add('fade-out'); setTimeout(function(){alert.remove(); }, 1000); }, 8000);"></script>
         <script src="{% static 'polls/homepage/homepage/js/jquery.min.js' %}"></script>
         <script src="{% static 'polls/homepage/homepage/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'polls/homepage/homepage/js/jquery.sticky.js' %}"></script>

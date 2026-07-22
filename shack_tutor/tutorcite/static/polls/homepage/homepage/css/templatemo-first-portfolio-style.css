@@ -1058,6 +1058,15 @@ strong {
   opacity: 0;
   transition: opacity 1s ease-out;
 }
+
+#message-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 90%;
+}
 /*---------------------------------------
   RESPONSIVE STYLES               
 -----------------------------------------*/

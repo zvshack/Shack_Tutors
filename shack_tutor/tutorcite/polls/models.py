@@ -16,6 +16,7 @@ class Tutor(models.Model):
     image = models.ImageField(upload_to='tutor_images/', blank=True, null=True)
     subjects = models.ManyToManyField('Subject', related_name='tutors')
     email = models.EmailField(blank=True, null=True)
+    review_key = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -38,7 +39,6 @@ class Review(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='reviews')
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
     approved = models.BooleanField(default=False)
 
     def __str__(self):

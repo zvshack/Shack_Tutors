@@ -26,18 +26,21 @@ def home(request):
 
 def tutor_detail(request, tutor_id):
     tutor = Tutor.objects.get(id=tutor_id)
-    reviews = tutor.reviews.all()
+    reviews = tutor.reviews.filter(approved=True).order_by('-created_at')
     return render(request, 'detail.html', {'tutor': tutor, 'reviews': reviews})
 
 def leave_review(request, tutor_id):
     if request.method == 'POST':
         tutor = Tutor.objects.get(id=tutor_id)
         name = request.POST.get('name')
-        comment = request.POST.get('comment')
-
+        comment = request.POST.get('comment')        
+        review_key = request.POST.get('review_key')
+        if review_key != tutor.review_key:
+            messages.error(request, 'Invalid review key. Please ask your tutor for their review key or try again.')
+            return redirect("tutor_detail", tutor_id=tutor_id)
 
         review = Review(name=name, tutor=tutor, comment=comment)
         review.save()
-        messages.success(request, 'Thank you for submitting your review!')
+        messages.success(request, '🎉           Thank you for submitting your review!           🎉')
 
     return redirect("tutor_detail", tutor_id=tutor_id)
