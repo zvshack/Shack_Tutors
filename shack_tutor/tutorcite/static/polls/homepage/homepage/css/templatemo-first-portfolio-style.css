@@ -305,6 +305,7 @@ strong {
   position: relative;
   z-index: 222;
   height: auto !important;
+  background: var(--white-color);
 }
 
 .is-sticky,
@@ -640,7 +641,7 @@ strong {
   border-radius: var(--border-radius-medium);
   position: relative;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: -100px;
   padding: 40px 40px 240px 40px;
   transition: all 0.5s;
 }
@@ -739,7 +740,12 @@ strong {
   height: 50px;
 }
 
-
+.bio-scroll {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 150px;
+  margin-bottom: 20px;
+}
 
 /*---------------------------------------
   PROJECTS              
@@ -1031,7 +1037,7 @@ strong {
     min-height: 60vh;
     position: relative;
     overflow: visible;
-    padding-top: 50px;
+    padding-top: 100px;
     padding-bottom: 330px;
 }
 

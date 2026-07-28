@@ -31,7 +31,7 @@
 
     </head>
     
-    <body>
+    <body class="home-page">
 
         <section class="preloader">
             <div class="spinner">
@@ -48,12 +48,12 @@
 
                 <!-- logo and name in navbar-->
                 <img src="{% static 'polls/homepage/homepage/images/logos/shacklogo.png' %}" class="navbar-icon bi-telephone-plus me-3" alt="Shack Tutors Logo">
-                <a href="home.html" class="navbar-brand mx-auto mx-lg-0">Shack Tutors</a>
+                <a href="{% url 'home' %}" class="navbar-brand mx-auto mx-lg-0">Shack Tutors</a>
 
                 <div class="d-flex align-items-center d-lg-none">
                     <i class="navbar-icon bi-telephone-plus me-3"></i>
                     <a class="custom-btn btn" href="#section_5">
-                        120-240-9600
+                        Contact Us
                     </a>
                 </div>
 
@@ -173,7 +173,9 @@
                                                             <img src="{% static 'polls/homepage/homepage/images/tutor_images/' %}{{ tutor.id }}profpic.jpeg" class="avatar-image ms-auto img-fluid" alt="">
                                                         </div>
 
-                                                        <p>{{ tutor.bio }}</p>
+                                                        <div class="bio-scroll">
+                                                            <p>{{ tutor.bio }}</p>
+                                                        </div>
 
                                                         <a href="{% url 'tutor_detail' tutor_id=tutor.id %}" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
                                                     </div>
@@ -267,7 +269,8 @@
                             <div class="clearfix"></div>
 
                             <div class="col-lg-6 col-12 mt-5 mt-lg-0">
-                                <form action="#" method="get" class="custom-form contact-form" role="form">
+                                <form action="{% url 'contact' %}" method="POST" class="custom-form contact-form" role="form">
+                                    {% csrf_token %}
                                     <div class="row">                                       
                                         <div class="col-lg-6 col-md-6 col-12">
                                             <div class="form-floating">

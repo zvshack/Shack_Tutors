@@ -43,7 +43,7 @@
     s.stickyWrapper.css('height', s.stickyElement.outerHeight());
 
         if (scrollTop <= etse) {
-          if (s.currentTop !== null) {
+          if (s.currentTop !== null && document.body.classList.contains("home-page")) {
             s.stickyElement
               .css({
                 'width': '',

@@ -15,7 +15,7 @@ class Tutor(models.Model):
     bio = models.TextField()
     image = models.ImageField(upload_to='tutor_images/', blank=True, null=True)
     subjects = models.ManyToManyField('Subject', related_name='tutors')
-    email = models.EmailField(blank=True, null=True)
+    email = models.EmailField(blank=False, null=False)
     review_key = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):

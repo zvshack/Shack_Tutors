@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
 from .models import Question, Choice, Tutor, Subject, Review
+from django.core.mail import send_mail
 
 def home(request):
     best_tutor = None
@@ -44,3 +45,26 @@ def leave_review(request, tutor_id):
         messages.success(request, '🎉           Thank you for submitting your review!           🎉')
 
     return redirect("tutor_detail", tutor_id=tutor_id)
+
+def contact(request):
+    if request.method == 'POST':
+        tutor_id = request.POST.get('tutor')
+        tutor = get_object_or_404(Tutor, id=tutor_id)
+
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Send an email
+        send_mail(
+            'Scheduling Request from ' + name,
+            (
+                'Hello, my name is ' + name + '.\n\n' + 
+                'I would like to schedule a time to call to talk about tutoruing. Here are any additional details: ' + message + 
+                '\n\nYou can reach me at: ' + email
+            ),
+            None,  # From email (None uses the DEFAULT_FROM_EMAIL setting)
+            [tutor.email],
+        )
+        messages.success(request, '🎉           Your message has been sent!           🎉')
+    return redirect("home")
