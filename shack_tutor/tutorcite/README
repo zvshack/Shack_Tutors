@@ -11,6 +11,38 @@ Shack Tutors is a Django-based web application that connects students and parent
 * Leave reviews for tutors (with administrator approval before publication).
 * Responsive design for desktop and mobile devices.
 
+## Screenshots
+
+### Homepage
+
+Homepage displaying the self created logo and navbar.
+
+![Shack Tutors Hompage](screenshots/homescreen.png)
+
+### Tutor Recommender
+
+The recommendation system finds the smallest combination of tutors needed to cover a all selected subjects using sets
+
+![Tutor Recommendation](screenshots/subjectpicking.png)
+
+### Tutor Profile
+
+Automatically creates pages for each tutor to check out more information such as their bio, subjects they tutor, picture, and contact form.
+
+![Tutor Profile](screenshots/tutorpage.png)
+
+### Tutor's Subjects
+
+Displays a fun child friendly way to show off subjects
+
+![Tutor's Subjects](screenshots/subjectsontutors.png)
+
+### Contact Form
+
+Shows off the contact form that can be accessed on each tutor page or the main home page
+
+![Contact Form](screenshots/contact.png)
+
 ## Technologies Used
 
 * Python
