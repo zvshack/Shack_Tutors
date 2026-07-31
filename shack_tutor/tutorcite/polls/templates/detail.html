@@ -31,9 +31,9 @@
 
     </head>
 
-    <body>
+    <body class="detail-page">
         <nav class="navbar navbar-expand-lg">
-            <div class="container">
+            <div class="container container-tutor">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -42,7 +42,14 @@
                 <!-- logo and name in navbar-->
                 <img src="{% static 'polls/homepage/homepage/images/logos/shacklogo.png' %}" class="navbar-icon bi-telephone-plus me-3" alt="Shack Tutors Logo">
                 
-                <a href="{% url 'home' %}" class="navbar-brand mx-auto mx-lg-0 text-left">Shack Tutors</a>
+                <a href="{% url 'home' %}" class="navbar-brand-tutor mx-auto mx-lg-0 ">Shack Tutors</a>
+
+                <div class="d-flex align-items-center ">
+                    <a class="custom-btn btn" href="#section_3">
+                        Contact Me
+                    </a>
+                </div>
+
             </div>
         </nav>
 
@@ -62,7 +69,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 col-12 text-center">
-                            <h1 class="hero-heading mb-0">{{ tutor.name }}</h1>
+                            <h1 class="hero-heading mb-0 tutor-title">{{ tutor.name }}</h1>
                             <!-- <img src="{% static 'polls/homepage/homepage/images/' %}{{ tutor.id }}profpic.jpeg" class="img-fluid rounded-circle mb-4" style="max-width: 200px;"> -->
                             <img src="{% static 'polls/homepage/homepage/images/tutor_images/' %}{{ tutor.id }}profpic.jpeg" class="avatar-image ms-auto img-fluid detail-avatar-image" alt="">
                             <p class="text-white mb-lg-5 mb-4 detail-bio">{{ tutor.bio }}</p>
@@ -77,14 +84,19 @@
                     <div class="row">
                         <div class="col-lg-6 col-12 mt-5 mt-lg-0">
                             <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
-                                <h2 class="text-white ms-0 mb-4">Subjects:</h2>
+                                <h2 class="text-white ms-0 mb-4">Subjects</h2>
                             </div>
                             <div class="about-thumb">
                                 
                                 <div class="detail-subject-grid">
                                    
                                     {% for subject in tutor.subjects.all %}
-                                        <li class="text-black">{{ subject.name }}</li>
+                                        <div class="subject-item">
+                                            {% if subject.image %}
+                                                <img src="{{ subject.image.url }}" alt="{{ subject.name }}" class="subject-logo">
+                                            {% endif %}
+                                            <span class=" subject-text">{{ subject.name }}</span>
+                                        </div>
                                     {% endfor %}
                                     
                                 </div>
@@ -108,7 +120,7 @@
                                 {% for review in reviews %}
                                     <div class="col-lg-4">
                                         <div class="review-card">
-                                            <p class="text-black">{{ review.created_at }}</p>
+                                            <p class="text-black">{{ review.created_at|date:"F, Y" }}</p>
                                             <br>
                                             <p class="text-black">"{{ review.comment }}"</p>   
                                             <br>
@@ -141,7 +153,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="comment" class="form-label">Review</label>
-                                                    <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                                                    <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Submit Review</button>
                                             </form>
@@ -211,6 +223,7 @@
                                 <div class="col-lg-3 col-12 ms-auto">
                                     <button type="submit" class="form-control">Send</button>
                                 </div>
+                                <input type="hidden" name="next" value="{{ request.path }}">
                             </div>
                         </form>
                     </div>
@@ -241,7 +254,7 @@
         <!-- JAVASCRIPT TIMEOUT FUNCTION -->
         <script>
         setTimeout(function() {
-            const alert = document.getElementById('review-success-message');
+            const alert = document.getElementById('message-container');
 
             if (alert) {
                 alert.classList.add('fade-out');
@@ -250,7 +263,7 @@
                     alert.remove();
                 }, 1000);
             }
-        }, 8000);
+        }, 5000);
         </script>
          <!-- JAVASCRIPT FILES -->
         <script src="{% static 'polls/homepage/homepage/js/jquery.min.js' %}"></script>

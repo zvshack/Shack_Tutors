@@ -29,6 +29,7 @@ class Subject(models.Model):
     ]
     name = models.CharField(max_length=100)
     id = models.CharField(primary_key=True)
+    image = models.ImageField(upload_to='subject_images', blank=True, null=True)
     category = models.CharField(max_length=20, choices=CATEGORIES, default="math")
 
     def __str__(self):

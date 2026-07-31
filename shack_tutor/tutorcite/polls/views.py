@@ -3,27 +3,64 @@ from django.contrib import messages
 from django.http import HttpResponse
 from .models import Question, Choice, Tutor, Subject, Review
 from django.core.mail import send_mail
+from django.http import JsonResponse
+from itertools import combinations
+from collections import Counter
 
 def home(request):
-    best_tutor = None
+    #Creates all sets, variables, and database lists
+    sor_resp = None
+    error = None
+
+
     categories = Subject.CATEGORIES
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
+
+    selected = []
+    valid_combos = []
+    
     if request.method == 'POST':
         # List of selected subject IDs
         selected = request.POST.getlist('subjects')
-        highest_score = -1
+        
+        #Send error message if no one is selected
+        if not selected:
+            error = "Please select at least one subject."
 
-        for tutor in Tutor.objects.all():
+        else:
+            tutor_matches = []
+            selected_set = set(selected)
+            #creates a set of subjects for tutors that teaches at least one of the selected subjects of the matching subjects
+            for tutor in tutors:
+                teaches = set(tutor.subjects.values_list("id", flat=True)) & selected_set
+                if teaches:
+                    tutor_matches.append({
+                        "tutor": tutor,
+                        "subjects": teaches
+                    })
             
-            tutor_subjects = tutor.subjects.values_list('id', flat=True)
+            #iterates through each tutor for all possible combinations of them (order doesn't matter) finding least possible amount of combos
+            for r in range(1, len(tutor_matches) + 1):
+                for combo in combinations(tutor_matches, r):
 
-            score = len(set(selected) & set(tutor_subjects))
-            if score > highest_score:
-                highest_score = score
-                best_tutor = tutor
-    
-    return render(request,'home.html', {"best_tutor": best_tutor, "categories": categories, "subjects": subjects, "tutors": tutors})
+                    #creates blank set and merges set with each tutor or combo 
+                    covered = set()
+
+                    for tutor in combo:
+                        covered |= tutor["subjects"]
+                    
+                    #if the covered set is completed add this combo of tutors to a list
+                    if covered == selected_set:
+                        valid_combos.append(combo)
+                #if there was at least one tutor combo, stop combinations from increasing if not go to find more combinations of tutors
+                if valid_combos:
+                    break           
+            #send a sorry response if no valid combos were found
+            if not valid_combos:
+                sor_resp = "Unfortunately, we currently have no tutors available for the selected subjects."
+        
+    return render(request,'home.html', {"valid_combos" : valid_combos, "categories": categories, "subjects": subjects, "tutors": tutors, "error": error, "sor_resp": sor_resp, "selected": selected})
 
 def tutor_detail(request, tutor_id):
     tutor = Tutor.objects.get(id=tutor_id)
@@ -67,4 +104,5 @@ def contact(request):
             [tutor.email],
         )
         messages.success(request, '🎉           Your message has been sent!           🎉')
+        return redirect(request.POST.get("next", "home"))
     return redirect("home")

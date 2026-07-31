@@ -2,6 +2,7 @@
 polls/__pycache__/
 __pycache__/
 *.py[cod]
+shacktutors/__pycache__/
 
 # Virtual environments
 venv/

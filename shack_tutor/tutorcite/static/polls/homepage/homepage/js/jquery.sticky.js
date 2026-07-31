@@ -216,4 +216,9 @@
 
 $(document).ready(function(){
       $(".navbar").sticky({topSpacing:0});
+
+      // Keeps is-sticky on the detail page
+      if (document.body.classList.contains("detail-page")) {
+        $(".navbar").parent().addClass("is-sticky");
+      }
     });

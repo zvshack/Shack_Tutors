@@ -223,8 +223,8 @@ strong {
   background: var(--white-color);
   border-radius: var(--border-radius-large);
   color: var(--dark-color);
-  width: 47px;
-  height: 47px;
+  width: 80px;
+  height: 80px;
   line-height: 47px;
   text-align: center;
 }
@@ -513,7 +513,7 @@ strong {
   position: absolute;
   z-index: 22;
   top: -50px;
-  right: 0;
+  right: -70px;
   left: 0;
   margin: auto;
   pointer-events: none;
@@ -743,7 +743,7 @@ strong {
 .bio-scroll {
   flex: 1;
   overflow-y: auto;
-  max-height: 150px;
+  max-height: 450px;
   margin-bottom: 20px;
 }
 
@@ -1041,11 +1041,35 @@ strong {
     padding-bottom: 330px;
 }
 
+.navbar-brand-tutor {
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-weight-bold);
+  color: black;
+  padding-top: .3125rem;
+  padding-bottom: .3125rem;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.container-tutor{
+  width: 80%;
+  height: 100px;
+}
+
+
+.tutor-title{
+  color: white;
+  padding-top: 20px;
+}
+
 .detail-bio{
   position: relative;
     z-index: 22;
     top: 70px;
 }
+
+
 
 .detail-avatar-image{
   border-radius: var(--border-radius-large);
@@ -1060,6 +1084,26 @@ strong {
     gap: 20px;
 }
 
+.subject-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subject-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom:10px;
+
+}
+
+.subject-text{
+  color: black;
+  font-size: larger;
+  font-weight: bold;
+}
+
 .fade-out {
   opacity: 0;
   transition: opacity 1s ease-out;
@@ -1072,6 +1116,7 @@ strong {
     transform: translateX(-50%);
     z-index: 9999;
     width: 90%;
+    
 }
 /*---------------------------------------
   RESPONSIVE STYLES               
@@ -1096,6 +1141,14 @@ strong {
 	.hero h2 {
 	  font-size: var(--h2-font-size);
 	}
+}
+  .about-image {
+    float: right;          
+    width: 250px;
+    height: 250px;
+    object-fit: cover;     
+    border-radius: 50%;
+    margin: 0 0 20px 30px;
 }
 
 @media screen and (max-width: 991px) {
@@ -1136,6 +1189,7 @@ strong {
 
   .navbar .container {
     background: var(--white-color);
+    overflow: hidden;
   }
 
   .navbar-brand,
@@ -1146,8 +1200,8 @@ strong {
   .navbar-icon {
     background: var(--secondary-color);
     color: var(--white-color);
-    width: 44px;
-    height: 44px;
+    width: 80px;
+    height: 80px;
     line-height: 44px;
   }
 
