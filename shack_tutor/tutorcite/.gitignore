@@ -4,6 +4,8 @@ __pycache__/
 *.py[cod]
 shacktutors/__pycache__/
 
+
+
 # Virtual environments
 venv/
 .venv/
@@ -25,3 +27,4 @@ Thumbs.db
 
 # Uploaded media files (optional)
 static/polls/homepage/homepage/images/tutor_images
+staticfiles/
