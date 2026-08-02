@@ -26,5 +26,5 @@ db.sqlite3
 Thumbs.db
 
 # Uploaded media files (optional)
-static/polls/homepage/homepage/images/tutor_images
+
 staticfiles/
