@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.http import JsonResponse
 from itertools import combinations
 from collections import Counter
+import resend
+from django.conf import settings
 
 def home(request):
     #Creates all sets, variables, and database lists
@@ -84,6 +86,8 @@ def leave_review(request, tutor_id):
     return redirect("tutor_detail", tutor_id=tutor_id)
 
 def contact(request):
+
+    
     if request.method == 'POST':
         tutor_id = request.POST.get('tutor')
         tutor = get_object_or_404(Tutor, id=tutor_id)
@@ -92,17 +96,19 @@ def contact(request):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        # Send an email
-        send_mail(
-            'Scheduling Request from ' + name,
-            (
-                'Hello, my name is ' + name + '.\n\n' + 
-                'I would like to schedule a time to call to talk about tutoruing. Here are any additional details: ' + message + 
-                '\n\nYou can reach me at: ' + email
-            ),
-            None,  # From email (None uses the DEFAULT_FROM_EMAIL setting)
-            [tutor.email],
-        )
-        messages.success(request, '🎉           Your message has been sent!           🎉')
-        return redirect(request.POST.get("next", "home"))
+        if tutor.email:
+            # Send an email
+            resend.api_key = settings.RESEND_API_KEY
+            resend.Emails.send(
+                "from": "onboarding@resend.dev",
+                "to" : [tutor.email],
+                "subject" : "Scheduling Request from " + name,
+                "text" : (
+                    'Hello, my name is ' + name + '.\n\n' + 
+                    'I would like to schedule a time to call to talk about tutoruing. Here are any additional details: ' + message + 
+                    '\n\nYou can reach me at: ' + email
+                ),
+            )
+            messages.success(request, '🎉           Your message has been sent!           🎉')
+            return redirect(request.POST.get("next", "home"))
     return redirect("home")
