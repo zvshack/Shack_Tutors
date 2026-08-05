@@ -99,7 +99,7 @@ def contact(request):
         if tutor.email:
             # Send an email
             resend.api_key = settings.RESEND_API_KEY
-            resend.Emails.send(
+            resend.Emails.send({
                 "from": "onboarding@resend.dev",
                 "to" : [tutor.email],
                 "subject" : "Scheduling Request from " + name,
@@ -108,7 +108,7 @@ def contact(request):
                     'I would like to schedule a time to call to talk about tutoruing. Here are any additional details: ' + message + 
                     '\n\nYou can reach me at: ' + email
                 ),
-            )
+            })
             messages.success(request, '🎉           Your message has been sent!           🎉')
             return redirect(request.POST.get("next", "home"))
     return redirect("home")
