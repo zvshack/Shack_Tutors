@@ -12,6 +12,8 @@ class Choice(models.Model):
 class Tutor(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    remote = models.BooleanField(default=False)
     bio = models.TextField()
     image = models.ImageField(upload_to='tutor_images/', blank=True, null=True)
     subjects = models.ManyToManyField('Subject', related_name='tutors')

@@ -35,9 +35,27 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container container-tutor">
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <!-- 3 lines for links around the page and site (under construction) -->
+                <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#section_1">Subjects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#section_2">Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#section_3">Contact</a>
+                        </li>
+                    </ul>
+                </div> -->
 
                 <!-- logo and name in navbar-->
                 <img src="{% static 'polls/homepage/homepage/images/logos/shacklogo.png' %}" class="navbar-icon bi-telephone-plus me-3" alt="Shack Tutors Logo">
@@ -45,7 +63,7 @@
                 <a href="{% url 'home' %}" class="navbar-brand-tutor mx-auto mx-lg-0 ">Shack Tutors</a>
 
                 <div class="d-flex align-items-center ">
-                    <a class="custom-btn btn" href="#section_3">
+                    <a class="custom-btn btn contact-button" href="#section_3">
                         Contact Me
                     </a>
                 </div>
@@ -72,6 +90,7 @@
                             <h1 class="hero-heading mb-0 tutor-title">{{ tutor.name }}</h1>
                             <!-- <img src="{% static 'polls/homepage/homepage/images/' %}{{ tutor.id }}profpic.jpeg" class="img-fluid rounded-circle mb-4" style="max-width: 200px;"> -->
                             <img src="{% static 'polls/homepage/homepage/images/tutor_images1/' %}{{ tutor.id }}profpic.JPEG" class="avatar-image ms-auto img-fluid detail-avatar-image" alt="">
+                            <p class="text-white mb-0 detail-location">{{ tutor.location }}{% if tutor.remote %} | Remote {% endif %}</p>
                             <p class="text-white mb-lg-5 mb-4 detail-bio">{{ tutor.bio }}</p>
                             
                         </div>
@@ -79,7 +98,7 @@
                 </div>
             </section>
         </main>
-        <section class="about section-padding" id="section_2">
+        <section class="about section-padding" id="section_1">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-12 mt-5 mt-lg-0">

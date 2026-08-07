@@ -507,25 +507,29 @@ strong {
 
 .hero-image-wrap {
   background: var(--white-color);
-  border-radius: 100%;
-  width: 350px;
-  height: 350px;
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
   position: absolute;
-  z-index: 22;
-  top: -50px;
+  z-index: 20;
+  top: -40px;
   right: -70px;
   left: 0;
   margin: auto;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-image {
   position: absolute;
   z-index: 22;
-  top: -110px;
-  right: -68px;
-  width: 100%;
-  min-width: 550px;
+  top: 50%;
+  left: 50%;
+  width: 550px;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
 }
 
 .hero svg {
@@ -1030,6 +1034,11 @@ strong {
 /*---------------------------------------
   Detail Page               
 -----------------------------------------*/
+@media (max-width: 768px) {
+  .contact-button {
+    display:none;
+  }
+}
 
 .detail-hero{
   background: var(--secondary-color);
